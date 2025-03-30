@@ -1,0 +1,57 @@
+[
+    {
+        "header": "Page Navigation",
+        "items": [
+            {
+                "text": "Dashboard",
+                "icon": "bx bxs-dashboard", 
+                "available": true,
+                "link": "/"
+            },
+            {
+                "text": "Orders",
+                "icon": "bx bxs-user",
+                "available": true,
+                "link": "/orders"
+            },
+            {
+                "text": "Customers",
+                "icon": "bx bx-group", 
+                "available": true,
+                "link": "/customers"
+            },
+            {
+                "text": "Admins",
+                "icon": "bx bxs-user",
+                "available": true,
+                "link": "/admins"
+            },
+            {
+                "text": "Employees",
+                "icon": "bx bxs-user",
+                "available": true,
+                "link": "/employees"
+            },
+            {
+                "text": "Services",
+                "icon": "bx bx-home",
+                "available": true,
+                "link": "/services"
+            },
+            {
+                "text": "Quotation",
+                "icon": "bx bx-home",
+                "available": true,
+                "link": "/quotation"
+            },
+            {
+                "text": "Vehicle",
+                "icon": "bx bxs-car",
+                "available": true,
+                "link": "/vehicles"
+            }
+
+        ]
+    }
+
+]

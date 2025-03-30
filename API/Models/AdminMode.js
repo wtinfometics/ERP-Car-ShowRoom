@@ -24,7 +24,7 @@ const AdminModel=mongoose.Schema({
     CreatedAt:{
         type:Date,
         default:Date.now
-    }    ,
+    },
     UpdatedAt:{
         type:Date,
         default:Date.now
