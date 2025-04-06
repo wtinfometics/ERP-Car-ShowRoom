@@ -51,6 +51,9 @@ const Orders = () => {
         }
     }
 
+    const formatIndianCurrency = (amount) => {
+        return new Intl.NumberFormat('en-IN').format(amount);
+    };
     return (
         <>
             <div className="card">
@@ -77,15 +80,15 @@ const Orders = () => {
                                         <td>
                                             <span className="fw-medium">{order.CustomerName}</span>
                                         </td>
-                                        <td>{order.VehicleID.model_name}</td>
+                                        <td>{order?.VehicleID?.model_name}</td>
                                         <td>
-                                            {order.VehicleID.variant}
+                                            {order?.VehicleID?.variant}
                                         </td>
                                         <td>
-                                            {order.Total}
+                                            {formatIndianCurrency(order.Total)}
                                         </td>
                                         <td>
-                                            {order.EmployeeID.Firstname+" "+order.EmployeeID.lastname}
+                                            {order?.EmployeeID?.Firstname+" "+order?.EmployeeID?.lastname}
                                         </td>
                                         <td>
                                             <div className="dropdown">

@@ -154,9 +154,8 @@ const AddEmployee = () => {
                 <p className='text-danger'>{inputError?.role?.message ? inputError.role.message : ""}</p>
               </div>
             </div>
-            {
-              id ? null : (
-                <>
+
+
                   <div className='col-lg-6'>
                     <div className="form-floating ">
                       <input
@@ -187,9 +186,8 @@ const AddEmployee = () => {
                       <p className='text-danger'>{inputError?.password_canform?.message ? inputError.password_canform.message : ""}</p>
                     </div>
                   </div>
-                </>
-              )
-            }
+        
+          
 
 
             <div className='col-lg-12 mt-5'>

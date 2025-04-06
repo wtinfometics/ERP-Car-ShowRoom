@@ -51,6 +51,11 @@ const Customer = () => {
             setcurrentpage(currentpage + 1)
         }
     }
+
+    const formatIndianCurrency = (amount) => {
+        return new Intl.NumberFormat('en-IN').format(amount);
+    };
+
     return (
         <>
             <div className="card">
@@ -79,10 +84,10 @@ const Customer = () => {
                                         </td>
                                         <td>{customer.MobileNum}</td>
                                         <td>
-                                            {customer.MinRange + "-" + customer.MaxRange}
+                                            {formatIndianCurrency(customer.MinRange) + "-" + formatIndianCurrency(customer.MaxRange)}
                                         </td>
                                         <td>
-                                            {customer.EmployeeID.Firstname+" "+customer.EmployeeID.lastname}
+                                            {customer?.EmployeeID?.Firstname+" "+customer?.EmployeeID?.lastname}
                                         </td>
                                         <td>
                                             <div className="dropdown">

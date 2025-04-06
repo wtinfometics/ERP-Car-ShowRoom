@@ -21,6 +21,9 @@ const ViewOrderDetails = () => {
         displayOrder()
     }, [])
 
+    const formatIndianCurrency = (amount) => {
+        return new Intl.NumberFormat('en-IN').format(amount);
+    };
     return (
         <div className="card">
             <h5 className="card-header">Order Details</h5>
@@ -53,23 +56,23 @@ const ViewOrderDetails = () => {
                         <p className='text-primary h3 mx-5 my-3'> Billing Details</p>
                         <tr>
                             <td><p className='display-6'><strong>Sub Total</strong></p></td>
-                            <td>{Order.Subtotal}</td>
+                            <td>{formatIndianCurrency(Order.Subtotal)}</td>
                         </tr>
                         <tr>
                             <td><p className='display-6'><strong>GST</strong></p></td>
-                            <td>{Order.Tax}</td>
+                            <td>{formatIndianCurrency(Order.Tax)}</td>
                         </tr>
                         <tr>
                             <td><p className='display-6'><strong>Road Tax</strong></p></td>
-                            <td>{Order.RtoCharge}</td>
+                            <td>{formatIndianCurrency(Order.RtoCharge)}</td>
                         </tr>
                         <tr>
                             <td><p className='display-6'><strong>Insurance</strong></p></td>
-                            <td>{Order.Insurance}</td>
+                            <td>{formatIndianCurrency(Order.Insurance)}</td>
                         </tr>
                         <tr>
                             <td><p className='display-6'><strong>Grand Total</strong></p></td>
-                            <td>{Order.Total}</td>
+                            <td>{formatIndianCurrency(Order.Total)}</td>
                         </tr>
                     </tbody>
                 </table>

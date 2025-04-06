@@ -10,9 +10,9 @@ const Sidebar = () => {
             <div className="app-brand demo">
                 <Link aria-label='Navigate to sneat homepage' to="/" className="app-brand-link">
                     <span className="app-brand-logo demo">
-                        <img src="/assets/img/sneat.svg" alt="sneat-logo" aria-label='Sneat logo image' />
+                        <img src="/assets/img/logo.jpg" alt="sneat-logo" aria-label='Sneat logo image' />
                     </span>
-                    <span className="app-brand-text demo menu-text fw-bold ms-2">Sneat</span>
+                    <span className="app-brand-text display-6 text-body fw-bold"> ERP</span>
                 </Link>
 
                 <a href="#" className="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">

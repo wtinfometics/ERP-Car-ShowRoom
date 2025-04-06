@@ -88,9 +88,7 @@ const Admin = () => {
                                                     <i className="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div className="dropdown-menu">
-                                                   
-                                                            <Link to={"/editadmin/" + admin._id} aria-label="dropdown action option" className="dropdown-item"
-                                                            ><i className="bx bx-edit-alt me-1"></i> Edit </Link>
+
 
                                                             <a aria-label="dropdown action option" className="dropdown-item" onClick={(e) => deketeAdmin(e, admin._id)}>
                                                                 <i className="bx bx-trash me-1"></i> Delete

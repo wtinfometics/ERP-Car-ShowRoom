@@ -274,7 +274,7 @@ const handlesubmit=(e)=>{
                 <option selected>Select the State</option>
                 {
                   states.map((state, i) => (
-                    <option value="1">{state.state}</option>
+                    <option value={state.state}>{state.state}</option>
                   ))
                 }
               </select>

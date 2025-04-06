@@ -59,6 +59,10 @@ const Vehicle = () => {
             setcurrentpage(currentpage + 1)
         }
     }
+
+    const formatIndianCurrency = (amount) => {
+        return new Intl.NumberFormat('en-IN').format(amount);
+    };
     return (
         <>
 
@@ -74,8 +78,8 @@ const Vehicle = () => {
                                 <th>Model Name </th>
                                 <th>Variant </th>
                                 <th>Color</th>
-                                <th>Stock</th>
                                 <th>Price</th>
+                                <th>Stock</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -91,7 +95,7 @@ const Vehicle = () => {
                                             {vehicle.color}
                                         </td>
                                         <td>
-                                            {vehicle.Price}
+                                            {formatIndianCurrency(vehicle.Price)}
                                         </td>
                                         <td>
                                             <span className={`badge ${getStockBadgeClass(vehicle.stock_quantity)} me-1`}>

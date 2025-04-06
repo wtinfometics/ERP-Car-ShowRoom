@@ -90,6 +90,10 @@ async function UpdateEmployee(req, res) {
             EmailId: req.body.EmailId,
             role:req.body.role,
         }
+        if (req.body.password !== undefined) {
+            const EncPassword = await EncryptPassword(req.body.password);
+            EmployeeData.Password= EncPassword;
+        }
         const RegisterEmployee = await EmployeeModel.findByIdAndUpdate(id, EmployeeData);
         if (RegisterEmployee) {
             res.status(200).send({ message: "Employee Updated Successfully" });

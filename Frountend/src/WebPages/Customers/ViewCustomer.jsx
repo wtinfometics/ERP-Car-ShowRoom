@@ -20,6 +20,10 @@ const ViewCustomer = () => {
         displayCustomer();
       },[])
     
+      const formatIndianCurrency = (amount) => {
+        return new Intl.NumberFormat('en-IN').format(amount);
+    };
+
     return (
         <div className="card">
             <h5 className="card-header">Vehicle Details</h5>
@@ -32,7 +36,7 @@ const ViewCustomer = () => {
                         </tr>
                         <tr>
                             <td><p className='display-6'><strong> Job Profile  </strong> </p></td> <td> {Customer.Job } </td>
-                            <td><p className='display-6'><strong> Price Range  </strong> </p></td> <td> {Customer.MinRange+"-"+Customer.MaxRange}</td>
+                            <td><p className='display-6'><strong> Price Range  </strong> </p></td> <td> {formatIndianCurrency(Customer.MinRange)+"-"+formatIndianCurrency(Customer.MaxRange)}</td>
                         </tr>
                         <tr>
                             <td><p className='display-6'><strong> Sales Representative  </strong> </p></td> <td> {Customer?.EmployeeID?.Firstname+"-"+Customer?.EmployeeID?.lastname}</td>

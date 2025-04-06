@@ -20,7 +20,9 @@ const ViewVehicles = () => {
     useEffect(()=>{
       displayVehicle()
     },[])
-  
+    const formatIndianCurrency = (amount) => {
+        return new Intl.NumberFormat('en-IN').format(amount);
+    };
     return (
         <>
             <div className="card">
@@ -38,7 +40,7 @@ const ViewVehicles = () => {
                         </tr>
                         <tr>
                             <td><p className='display-6'><strong> Stock </strong> </p></td> <td> {Vehicle.stock_quantity}</td>
-                            <td><p className='display-6'><strong> Price </strong> </p></td> <td> {Vehicle.Price}</td>
+                            <td><p className='display-6'><strong> Price </strong> </p></td> <td> {formatIndianCurrency(Vehicle.Price)}</td>
                         </tr>
                
                     </tbody>

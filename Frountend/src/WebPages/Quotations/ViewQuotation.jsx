@@ -29,6 +29,10 @@ const ViewQuotation = () => {
                 return "bg-label-primary";  
         }
     };
+
+    const formatIndianCurrency = (amount) => {
+        return new Intl.NumberFormat('en-IN').format(amount);
+    };
     return (
         <div className="card">
             <h5 className="card-header">Quotation Details</h5>

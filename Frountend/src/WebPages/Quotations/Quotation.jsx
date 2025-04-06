@@ -91,9 +91,11 @@ const Quotation = () => {
                                         <td>
                                             <span className="fw-medium">{quotation.Firstname + "  " + quotation.lastname}</span>
                                         </td>
-                                        <td>{quotation.MobileNum}</td>
                                         <td>
-                                            {quotation.VehicleID.model_name}
+                                            {quotation?.VehicleID?.model_name}
+                                        </td>
+                                        <td>
+                                            {quotation?.VehicleID?.variant}
                                         </td>
                                         <td>
                                             {formatIndianCurrency(quotation.Price)} 

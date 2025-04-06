@@ -11,9 +11,9 @@ export const AuthWrapper = ({ children }) => {
                             <div className="app-brand justify-content-center">
                                 <Link aria-label='Go to Home Page' to="/" className="app-brand-link gap-2">
                                     <span className="app-brand-logo demo">
-                                        <img src="/assets/img/sneat.svg" alt="sneat-logo" />
+                                        <img src="/assets/img/logo.jpg" alt="sneat-logo" />
                                     </span>
-                                    <span className="app-brand-text demo text-body fw-bold">Sneat</span>
+                                    <span className="app-brand-text display-6 text-body fw-bold"> ERP</span>
                                 </Link>
                             </div>
                             {children}
