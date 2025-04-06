@@ -32,7 +32,7 @@ async function CreateAdmin(req, res) {
         res.status(422).send(validate.errors);
     } else {
         console.log(req.body.password)
-        const EncPassword = await EncryptPassword(req.body.Password);
+        const EncPassword = await EncryptPassword(req.body.password);
         const AdminData = {
             Firstname: req.body.Firstname,
             lastname: req.body.lastname,
