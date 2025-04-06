@@ -7,8 +7,9 @@ const API_URL = import.meta.env.VITE_API_BASEURL;
 const AddOrder = () => {
   const navigate = useNavigate();
   const [Vehicles, setVehicle] = useState([]);
+  const [Employee, setEmployee] = useState([]);
   const [input, setInput] = useState({
-    VehicleID: "", CustomerName: "", ModileNumber: "", Address: "", Street: "", City: "",
+    VehicleID: "", CustomerName: "", ModileNumber: "", Address: "", Street: "", City: "",EmployeeID:"",
     State: "", Pincode: "", Subtotal: "", RtoCharge: "", Insurance: "", Tax: "", Total: "",
   })
   const [prices, setprices] = useState();
@@ -36,8 +37,17 @@ const AddOrder = () => {
     });
   }
 
+  const displayEmployee = () => {
+    axios.get(`${API_URL}getallsalesref`, { headers: AuthHeader() }).then((response) => {
+      setEmployee(response.data.reverse());
+    }).catch((error) => {
+      console.log(error)
+    });
+  }
+
   useEffect(() => {
     displaycar();
+    displayEmployee();
     displayVehicle();
   }, [input.VehicleID])
 
@@ -58,10 +68,14 @@ const AddOrder = () => {
       });
     }
   }
+
+
+
   const formData = {
     VehicleID: input.VehicleID,
     CustomerName: input.CustomerName,
     ModileNumber: input.ModileNumber,
+    EmployeeID:input.EmployeeID,
     Address: input.Address,
     Street: input.Street,
     City: input.City,
@@ -168,6 +182,23 @@ const AddOrder = () => {
               </div>
             </div>
             <div className='col-lg-6'>
+            <div className="form-floating ">
+              <div class="form-floating">
+                <select class="form-select" id="floatingSelect" name='EmployeeID' value={input.EmployeeID} onChange={updatefeilds} aria-label="Floating label select example">
+                  <option selected>Select the Sales Representative</option>
+                  {
+                    Employee.map((salesref)=>(
+                      <option value={salesref._id}>{salesref.Firstname+" "+salesref.lastname} </option>
+                    ))
+                  }
+
+                </select>
+                <label for="floatingSelect">Leads From</label>
+              </div>
+             <p className='text-danger'>{inputError?.EmployeeID?.message ? inputError.EmployeeID.message : ""}</p>
+            </div>
+          </div>
+            <div className='col-lg-6'>
               <div className="form-floating ">
                 <input
                   type="text"
@@ -218,7 +249,7 @@ const AddOrder = () => {
                   <option selected>Select the State</option>
                   {
                     states.map((state, i) => (
-                      <option value="1">{state.state}</option>
+                      <option value={state.state}>{state.state}</option>
                     ))
                   }
                 </select>
@@ -241,12 +272,11 @@ const AddOrder = () => {
                 <p className='text-danger'>{inputError?.Pincode?.message ? inputError.Pincode.message : ""}</p>
               </div>
             </div>
-            <div className='col-lg-6'></div>
-            <div className='col-lg-6'>
+            <div className='col-lg-9'>
 
               <div class="container ">
                 <div class="-lg p-4">
-                  <h3 class="text-center mb-4">Price Information</h3>
+                  <h3 class="text-start mb-4 ml-3">Price Information</h3>
 
                   <div class="row mb-3">
                     <div class="col-6">Ex-Showroom Price:</div>

@@ -14,6 +14,7 @@ Employee.get("/ViewEmployee/:id",AuthMiddleware("admin","manager"),EmployeeContr
 Employee.post("/UpdateEmployee/:id",AuthMiddleware("admin"),EmployeeController.UpdateEmployee);
 Employee.delete("/DeleteEmployee/:id",AuthMiddleware("admin"),EmployeeController.DeleteEmployee);
 Employee.get("/getallsalesref",AuthMiddleware("admin","manager"),EmployeeController.getallsalesref);
+Employee.get("/getEmployeebytoken",AuthMiddleware("sales-ref","manager"),EmployeeController.getEmployeeBytoken);
 
 Employee.post("/employee/Login",EmployeeController.Login);
 Employee.post("/employee/ForgetPassword",EmployeeController.ForgetPassword);

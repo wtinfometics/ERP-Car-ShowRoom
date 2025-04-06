@@ -15,6 +15,11 @@ const SalesModel=mongoose.Schema({
         type:Number,
         required:true
     },  
+    EmployeeID:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Employees",
+        required:true
+    },
     Address:{
         type:String,
         required:true

@@ -94,29 +94,30 @@ async function DeleteVehicle(req, res) {
 
 async function CalculateVehicleAmount(req,res) {
     const id = req.params.id;
-    const Vehicle = await VehicleModel.findById(id);
-    if (Vehicle) {
-        const price=Vehicle.Price;
-        const taxrate=28;
-        if (price>900000) {
-            taxrate=42;
-        }
-        const Rtocharge=price/100*10;
-        const insurance=price/100*15;
-        const tax=price/100*taxrate;
-      const total=price+Rtocharge+insurance+tax;
-      const data={
-        Subtotal:price,
-        RtoCharge:Rtocharge,
-        Insurance:insurance,
-        Tax:tax,
-        Total:total,
-        VehicleID:id
-      }
-      res.status(200).send(data);
-    } else {
-        res.status(400).send({ message: "Vehicle Data Not Exists" })
+    const vehicle = await VehicleModel.findById(id);
+
+    if (!vehicle) {
+        return res.status(404).send({ message: "Vehicle data does not exist." });
     }
+
+    const price = vehicle.Price;
+    let taxRate = price > 900000 ? 42 : 28;
+
+    const rtoCharge = (price * 10) / 100;
+    const insurance = (price * 15) / 100;
+    const tax = (price * taxRate) / 100;
+    const total = price + rtoCharge + insurance + tax;
+
+    const data = {
+        Subtotal: price,
+        RtoCharge: rtoCharge,
+        Insurance: insurance,
+        Tax: tax,
+        Total: total,
+        VehicleID: id
+    };
+
+    res.status(200).json(data);
 }
 
 module.exports = {

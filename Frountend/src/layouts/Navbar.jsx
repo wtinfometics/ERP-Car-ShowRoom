@@ -1,10 +1,38 @@
-import getGreetingMessage from '../utils/greetingHandler';
+import axios, { AxiosHeaders } from 'axios';
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+const API_URL = import.meta.env.VITE_API_BASEURL;
+const role = localStorage.getItem("role");
+import AuthHeader from '../WebPages/Accounts/AuthHeader';
 const Navbar = () => {
+  const [user,setUser]=useState([]);
   const logout = () => {
     localStorage.removeItem("role");
     localStorage.removeItem("user");
     window.location.reload();
 }
+
+const DisplayUser = (e) => {
+
+  if (role =="admin") {
+    axios.get(`${API_URL}getadminbytoken`, { headers: AuthHeader() }).then((response) => {
+      setUser(response.data);
+    }).catch((error) => {
+        console.log(error)
+    });
+  } else {
+    axios.get(`${API_URL}getEmployeebytoken`, { headers: AuthHeader() }).then((response) => {
+      setUser(response.data);
+    }).catch((error) => {
+        console.log(error)
+    });
+  }
+
+}
+useEffect(() => {
+  DisplayUser();
+}, [])
+
   return (
     <nav
       className="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
@@ -34,8 +62,8 @@ const Navbar = () => {
                       </div>
                     </div>
                     <div className="flex-grow-1">
-                      <span className="fw-medium d-block">John Doe</span>
-                      <small className="text-muted">Admin</small>
+                      <span className="fw-medium d-block">{user.Firstname + " "+ user.lastname} </span>
+                      <small className="text-muted">{role}</small>
                     </div>
                   </div>
                 </a>
@@ -43,30 +71,7 @@ const Navbar = () => {
               <li>
                 <div className="dropdown-divider"></div>
               </li>
-              <li>
-                <a aria-label='go to profile' className="dropdown-item" href="#">
-                  <i className="bx bx-user me-2"></i>
-                  <span className="align-middle">My Profile</span>
-                </a>
-              </li>
-              <li>
-                <a aria-label='go to setting' className="dropdown-item" href="#">
-                  <i className="bx bx-cog me-2"></i>
-                  <span className="align-middle">Settings</span>
-                </a>
-              </li>
-              <li>
-                <a aria-label='go to billing' className="dropdown-item" href="#">
-                  <span className="d-flex align-items-center align-middle">
-                    <i className="flex-shrink-0 bx bx-credit-card me-2"></i>
-                    <span className="flex-grow-1 align-middle ms-1">Billing</span>
-                    <span className="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <div className="dropdown-divider"></div>
-              </li>
+          
               <li onClick={logout}>
                 <a aria-label='click to log out' className="dropdown-item" href="#">
                   <i className="bx bx-power-off me-2"></i>

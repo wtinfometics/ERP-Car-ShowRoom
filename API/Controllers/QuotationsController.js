@@ -33,7 +33,7 @@ async function AddQuotation(req,res) {
 }
 
 async function ViewAllQuotations(req,res) {
-    const Quotations=await QuotationModel.find() .populate('VehicleID').exec();;
+    const Quotations=await QuotationModel.find() .populate('VehicleID').exec();
     if (Quotations.length>0) {
         res.status(200).send(Quotations);
     } else {
@@ -43,7 +43,7 @@ async function ViewAllQuotations(req,res) {
 
 async function ViewQuotation(req,res) {
     const id=req.params.id;
-    const Quotation=await QuotationModel.findById(id);
+    const Quotation=await QuotationModel.findById(id).populate('VehicleID').exec();
     if (Quotation) {
         res.send(Quotation).status(200)
     } else {

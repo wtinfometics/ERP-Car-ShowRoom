@@ -69,14 +69,18 @@ import VerifyOtp from "../WebPages/Accounts/VerifyOtp";
 import ResetPassword from "../WebPages/Accounts/ResetPassword";
 import Orders from "../WebPages/Orders/Orders";
 import AddOrder from "../WebPages/Orders/AddOrder";
-import AdminDashboard from "../WebPages/Admin/AdminDashboard";
+import Dashboard from "../WebPages/Dashboard/Dashboard";
+import ViewVehicles from "../WebPages/Vehicles/ViewVehicles";
+import ViewCustomer from "../WebPages/Customers/ViewCustomer";
+import ViewOrderDetails from "../WebPages/Orders/ViewOrderDetails";
+import ViewQuotation from "../WebPages/Quotations/ViewQuotation";
 
 import Auth from "../WebPages/Accounts/Auth";
 const AppRoutes = () => {
     return (
         <Routes>
             <Route path="/" element={<Auth>
-                <AdminDashboard />
+                <Dashboard />
             </Auth>} />
             <Route path="/customers" element={<Auth>
                 <Customer />
@@ -86,6 +90,9 @@ const AppRoutes = () => {
             </Auth>} />
             <Route path="/editcustomer/:id" element={<Auth>
                 <AddCustomer />
+            </Auth>} />
+            <Route path="/viewcustomer/:id" element={<Auth>
+                <ViewCustomer />
             </Auth>} />
             <Route path="/admins" element={<Auth>
                 <Admin />
@@ -114,6 +121,9 @@ const AppRoutes = () => {
             <Route path="/editquotation/:id" element={<Auth>
                 <AddQuotation />
             </Auth>} />
+            <Route path="/viewquotation/:id" element={<Auth>
+                <ViewQuotation />
+            </Auth>} />
             <Route path="/services" element={<Auth>
                 <Services />
             </Auth>} />
@@ -132,6 +142,9 @@ const AppRoutes = () => {
             <Route path="/editvehicle/:id" element={<Auth>
                 <AddVehicle />
             </Auth>} />
+            <Route path="/viewvehicles/:id" element={<Auth>
+                <ViewVehicles />
+            </Auth>} />
             <Route path="/orders" element={<Auth>
                 <Orders />
             </Auth>} />
@@ -140,6 +153,9 @@ const AppRoutes = () => {
             </Auth>} />
             <Route path="/updateorder/:id" element={<Auth>
                 <AddOrder />
+            </Auth>} />
+            <Route path="/viewordersdetails/:id" element={<Auth>
+                <ViewOrderDetails />
             </Auth>} />
 
 

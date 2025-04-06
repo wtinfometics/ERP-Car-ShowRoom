@@ -7,10 +7,11 @@ const API_URL = import.meta.env.VITE_API_BASEURL;
 const AddCustomer = () => {
   const navigate = useNavigate();
   const [input, setInput] = useState({
-    Firstname: "", lastname: "", MobileNum: "", source: "", MinRange: "",Job:"",
+    Firstname: "", lastname: "", MobileNum: "", source: "", MinRange: "",Job:"",EmployeeID:"",
     MaxRange: "", Address: "", Street: "", City: "", State: "", Pincode: "",
   })
   const [inputError, setInputError] = useState([]);
+  const [salesrefs, setsalesrefs] = useState([]);
   const {id}=useParams();
 
   if (id) {
@@ -26,6 +27,18 @@ const AddCustomer = () => {
     },[])
   }
 
+  const GetSalesRef=()=>{
+    axios.get(`${API_URL}getallsalesref`, { headers: AuthHeader() }).then((response) => {
+      console.log(response)
+      setsalesrefs(response.data)
+     }).catch((error) => {
+         console.log(error)
+     });
+  }
+  useEffect(()=>{
+GetSalesRef();
+  },[])
+
   const updatefeilds = (e) => {
     e.persist();
     console.log(e.target.value);
@@ -38,6 +51,7 @@ const AddCustomer = () => {
     MobileNum:input.MobileNum,
     source:input.source,
     Job:input.Job,
+    EmployeeID:input.EmployeeID,
     MinRange:input.MinRange,
     MaxRange:input.MaxRange,
     Address:input.Address,
@@ -147,6 +161,23 @@ const handlesubmit=(e)=>{
           <div className='col-lg-6'>
             <div className="form-floating ">
               <div class="form-floating">
+                <select class="form-select" id="floatingSelect" name='EmployeeID' value={input.EmployeeID} onChange={updatefeilds} aria-label="Floating label select example">
+                  <option selected>Select the Sales Representative</option>
+                  {
+                    salesrefs.map((salesref)=>(
+                      <option value={salesref._id}>{salesref.Firstname+" "+salesref.lastname} </option>
+                    ))
+                  }
+
+                </select>
+                <label for="floatingSelect">Leads From</label>
+              </div>
+             <p className='text-danger'>{inputError?.EmployeeID?.message ? inputError.EmployeeID.message : ""}</p>
+            </div>
+          </div>
+          <div className='col-lg-6'>
+            <div className="form-floating ">
+              <div class="form-floating">
                 <select class="form-select" id="floatingSelect" name='Job' value={input.Job} onChange={updatefeilds} aria-label="Floating label select example">
                   <option selected>Select the Job Or Occupation </option>
                   <option value="Civil Servant">Civil Servant</option>
@@ -156,7 +187,7 @@ const handlesubmit=(e)=>{
                   <option value="Self Employed">Self Employed </option>
                   <option value="Farmer">Farmer</option>
                 </select>
-                <label for="floatingSelect">Job</label>
+                <label for="floatingSelect">Job Profile</label>
               </div>
              <p className='text-danger'>{inputError?.Job?.message ? inputError.Job.message : ""}</p>
             </div>

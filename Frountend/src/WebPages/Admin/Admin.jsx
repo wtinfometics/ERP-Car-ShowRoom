@@ -9,7 +9,7 @@ const Admin = () => {
     const [Admins, setAdmins] = useState([]);
 
     const [currentpage, setcurrentpage] = useState(1);
-    const recordsperpage = 1;
+    const recordsperpage = 10;
     const lastindex = currentpage * recordsperpage;
     const fristindex = lastindex - recordsperpage;
     const PaginatedAdmins = Admins.slice(fristindex, lastindex);

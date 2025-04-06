@@ -6,6 +6,7 @@ async function addsale(req, res) {
         VehicleID: "required|string",
         CustomerName: "required|string",
         ModileNumber: "required|string",
+        EmployeeID:"required|string",
         Address: "required|string",
         Street: "required|string",
         City: "required|string",
@@ -25,6 +26,7 @@ async function addsale(req, res) {
             VehicleID: req.body.VehicleID,
             CustomerName: req.body.CustomerName,
             ModileNumber: req.body.ModileNumber,
+            EmployeeID:req.body.EmployeeID,
             Address: req.body.Address,
             Street: req.body.Street,
             City: req.body.City,
@@ -47,7 +49,7 @@ async function addsale(req, res) {
 }
 
 async function viesales(req, res) {
-    const Sales = await SalesModel.find().populate('VehicleID').exec();;
+    const Sales = await SalesModel.find().populate('VehicleID').populate('EmployeeID').exec();
     if (Sales.length > 0) {
         res.status(200).send(Sales);
     } else {
@@ -57,7 +59,7 @@ async function viesales(req, res) {
 
 async function viewsale(req, res) {
     const id = req.params.id;
-    const Sale = await SalesModel.findById(id).populate('VehicleID').exec();;
+    const Sale = await SalesModel.findById(id).populate('VehicleID').populate('EmployeeID').exec();
     if (Sale) {
         res.status(200).send(Sale);
     } else {
@@ -70,6 +72,7 @@ async function updatesale(req, res) {
         VehicleID: "required|string",
         CustomerName: "required|string",
         ModileNumber: "required|string",
+        EmployeeID:"required|string",
         Address: "required|string",
         Street: "required|string",
         City: "required|string",
@@ -90,6 +93,7 @@ async function updatesale(req, res) {
             VehicleID: req.body.VehicleID,
             CustomerName: req.body.CustomerName,
             ModileNumber: req.body.ModileNumber,
+            EmployeeID:req.body.EmployeeID,
             Address: req.body.Address,
             Street: req.body.Street,
             City: req.body.City,
@@ -120,7 +124,7 @@ async function deletesale(req, res) {
     }
 }
 
-async function salespermonth(params) {
+async function salespermonth(req,res) {
        const startOfMonth = moment().startOf('month').toDate();
         const endOfMonth = moment().endOf('month').toDate();
     
@@ -133,11 +137,37 @@ async function salespermonth(params) {
             res.status(400).send({ message: "Customer Data is Empty" })
         }
 } 
+
+async function GetOrdersOfEmployee(req,res) {
+    const id=req.user.id;
+    const Sales = await SalesModel.find({EmployeeID:id}).populate('VehicleID').populate('EmployeeID').exec();;
+    if (Sales.length > 0) {
+        res.status(200).send(Sales);
+    } else {
+        res.status(400).send({ message: "Sale Data is Empty" });
+    }
+}
+
+async function GetOrdersOfEmployeeinthismonth(req,res) {
+    const startOfMonth = moment().startOf('month').toDate();
+    const endOfMonth = moment().endOf('month').toDate();
+    const id=req.user.id;
+    const customers = await SalesModel.find({EmployeeID:id,
+        CreatedAt: { $gte: startOfMonth, $lte: endOfMonth }
+    }).populate('VehicleID').exec();
+    if (customers.length > 0) {
+        res.status(200).send(customers );
+    } else {
+        res.status(400).send({ message: "Customer Data is Empty" })
+    }
+}
 module.exports = {
     addsale,
     viesales,
     viewsale,
     updatesale,
     deletesale,
-    salespermonth
+    salespermonth,
+    GetOrdersOfEmployee,
+    GetOrdersOfEmployeeinthismonth
 }

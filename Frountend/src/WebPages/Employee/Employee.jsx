@@ -9,7 +9,7 @@ const Employee = () => {
     const [Employees, setEmployees] = useState([]);
 
     const [currentpage, setcurrentpage] = useState(1);
-    const recordsperpage = 1;
+    const recordsperpage = 10;
     const lastindex = currentpage * recordsperpage;
     const fristindex = lastindex - recordsperpage;
     const PaginatedEmployee = Employees.slice(fristindex, lastindex);

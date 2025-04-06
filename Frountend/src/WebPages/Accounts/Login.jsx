@@ -46,7 +46,7 @@ const Login = () => {
 
                 if (response.data.token) {
                     localStorage.setItem('user', JSON.stringify(response.data.token));
-                    localStorage.setItem('role', JSON.stringify(response.data.role));
+                    localStorage.setItem('role', response.data.role);
                     nabigate("/");
                 }
             })
@@ -71,7 +71,7 @@ const Login = () => {
 
                 if (response.data.token) {
                     localStorage.setItem('user', JSON.stringify(response.data.token));
-                    localStorage.setItem('role', JSON.stringify(response.data.role));
+                    localStorage.setItem('role',response.data.role);
                     nabigate("/");
                 }
             })

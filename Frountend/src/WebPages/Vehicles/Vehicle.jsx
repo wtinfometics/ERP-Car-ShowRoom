@@ -8,7 +8,7 @@ const Vehicle = () => {
     const [Vehicles, setVehicle] = useState([]);
 
     const [currentpage, setcurrentpage] = useState(1);
-    const recordsperpage = 3;
+    const recordsperpage = 30;
     const lastindex = currentpage * recordsperpage;
     const fristindex = lastindex - recordsperpage;
     const PaginatedVehicles = Vehicles.slice(fristindex, lastindex);
@@ -104,9 +104,11 @@ const Vehicle = () => {
                                                     <i className="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div className="dropdown-menu">
+                                                <Link to={"/viewvehicles/"+vehicle._id} aria-label="dropdown action option" className="dropdown-item" 
+                                                    ><i className="bx bx-edit-alt me-1"></i> View </Link>
                                                     <Link to={"/editvehicle/"+vehicle._id} aria-label="dropdown action option" className="dropdown-item" 
                                                     ><i className="bx bx-edit-alt me-1"></i> Edit </Link>
-                                                    {role === "sales-ref" ? null : (
+                                                    {role == "sales-ref" ? null : (
                                                         <a aria-label="dropdown action option" className="dropdown-item" onClick={(e)=>deketeVehicle(e,vehicle._id)}>
                                                             <i className="bx bx-trash me-1"></i> Delete
                                                         </a>

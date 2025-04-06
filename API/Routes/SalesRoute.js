@@ -14,5 +14,6 @@ Sale.get("/viewsale/:id",AuthMiddleware("admin","sales-ref","manager"),SalesCont
 Sale.post("/updatesale/:id",AuthMiddleware("admin","sales-ref","manager"),SalesController.updatesale);
 Sale.delete("/deletesale/:id",AuthMiddleware("admin","manager"),SalesController.deletesale);
 Sale.get("/salespermonth",AuthMiddleware("admin","sales-ref","manager"),SalesController.viesales);
-
+Sale.get("/GetOrdersOfEmployee",AuthMiddleware("admin","sales-ref","manager"),SalesController.GetOrdersOfEmployee);
+Sale.get("/GetOrdersOfEmployeeinthismonth",AuthMiddleware("admin","sales-ref","manager"),SalesController.GetOrdersOfEmployeeinthismonth);
 module.exports=Sale;

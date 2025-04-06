@@ -8,16 +8,18 @@ const Orders = () => {
     const [Orders, setOrders] = useState([]);
 
     const [currentpage, setcurrentpage] = useState(1);
-    const recordsperpage = 1;
+    const recordsperpage = 10;
     const lastindex = currentpage * recordsperpage;
     const fristindex = lastindex - recordsperpage;
     const PaginatedOrders = Orders.slice(fristindex, lastindex);
     const npages = Math.ceil(Orders.length / recordsperpage);
     const numberofpages = [...Array(npages + 1).keys()].slice(1);
 
+    const route=role=="sales-ref"?"GetOrdersOfEmployee":"viewsales";
     const DisplayOrders = (e) => {
-        axios.get(`${API_URL}viewsales`, { headers: AuthHeader() }).then((response) => {
+        axios.get(`${API_URL}${route}`, { headers: AuthHeader() }).then((response) => {
             setOrders(response.data.reverse());
+            console.log(response.data)
         }).catch((error) => {
             console.log(error)
         });
@@ -63,6 +65,7 @@ const Orders = () => {
                                 <th>Vehicle </th>
                                 <th>Variant</th>
                                 <th>Price</th>
+                                <th>Lead From</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -82,14 +85,19 @@ const Orders = () => {
                                             {order.Total}
                                         </td>
                                         <td>
+                                            {order.EmployeeID.Firstname+" "+order.EmployeeID.lastname}
+                                        </td>
+                                        <td>
                                             <div className="dropdown">
                                                 <button aria-label='Click me' type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                                     <i className="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div className="dropdown-menu">
+                                                <Link to={"/viewordersdetails/" + order._id} aria-label="dropdown action option" className="dropdown-item"
+                                                    ><i className="bx bx-edit-alt me-1"></i> View </Link>
                                                     {/* <Link to={"/updateorder/" + order._id} aria-label="dropdown action option" className="dropdown-item"
                                                     ><i className="bx bx-edit-alt me-1"></i> Edit </Link> */}
-                                                    {
+                                                    {  
                                                     role == "sales-ref" ? "" : (
                                                         <a aria-label="dropdown action option" className="dropdown-item" onClick={(e) => deketeOrder(e, order._id)}>
                                                             <i className="bx bx-trash me-1"></i> Delete

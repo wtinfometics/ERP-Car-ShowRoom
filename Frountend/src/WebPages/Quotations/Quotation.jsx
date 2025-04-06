@@ -8,7 +8,7 @@ const Quotation = () => {
     const [Quotations, setQuotations] = useState([]);
 
     const [currentpage, setcurrentpage] = useState(1);
-    const recordsperpage = 1;
+    const recordsperpage = 10;
     const lastindex = currentpage * recordsperpage;
     const fristindex = lastindex - recordsperpage;
     const PaginatedQuotations = Quotations.slice(fristindex, lastindex);
@@ -109,7 +109,8 @@ const Quotation = () => {
                                                     <i className="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div className="dropdown-menu">
-
+                                                    <Link to={"/viewquotation/" + quotation._id} aria-label="dropdown action option" className="dropdown-item"
+                                                    ><i className="bx bx-edit-alt me-1"></i> View </Link>
                                                     <Link to={"/editquotation/" + quotation._id} aria-label="dropdown action option" className="dropdown-item"
                                                     ><i className="bx bx-edit-alt me-1"></i> Edit </Link>
                                                     {role === "sales-ref" ? null :(

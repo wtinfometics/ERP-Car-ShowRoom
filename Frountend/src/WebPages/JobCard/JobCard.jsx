@@ -8,7 +8,7 @@ const JobCard = () => {
     const [JobCards, setJobCards] = useState([]);
 
     const [currentpage, setcurrentpage] = useState(1);
-    const recordsperpage = 1;
+    const recordsperpage = 10;
     const lastindex = currentpage * recordsperpage;
     const fristindex = lastindex - recordsperpage;
     const PaginatedJobCards = JobCards.slice(fristindex, lastindex);

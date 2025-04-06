@@ -10,6 +10,7 @@ async function AddCustomer(req, res) {
         MinRange: "required|numeric",
         MaxRange: "required|numeric",
         Job: "required|string",
+        EmployeeID: "required|string",
         Address: "required|string",
         Street: "required|string",
         City: "required|string",
@@ -28,6 +29,7 @@ async function AddCustomer(req, res) {
             MinRange: req.body.MinRange,
             MaxRange: req.body.MaxRange,
             Job: req.body.Job,
+            EmployeeID: req.body.EmployeeID,
             Address: req.body.Address,
             Street: req.body.Street,
             City: req.body.City,
@@ -45,7 +47,7 @@ async function AddCustomer(req, res) {
 }
 
 async function ViewAllCustomer(req, res) {
-    const Customers = await CustomerModel.find();
+    const Customers = await CustomerModel.find().populate('EmployeeID').exec();
     if (Customers.length > 0) {
         res.status(200).send(Customers);
     } else {
@@ -55,7 +57,7 @@ async function ViewAllCustomer(req, res) {
 
 async function ViewCustomer(req, res) {
     const id = req.params.id;
-    const Customer = await CustomerModel.findById(id);
+    const Customer = await CustomerModel.findById(id).populate('EmployeeID').exec();
     if (Customer) {
         res.status(200).send(Customer);
     } else {
@@ -71,6 +73,7 @@ async function UpdateCustomer(req, res) {
         MinRange: "required|numeric",
         MaxRange: "required|numeric",
         Job: "required|string",
+        EmployeeID: "required|string",
         MobileNum: "required|string",
         Address: "required|string",
         Street: "required|string",
@@ -91,6 +94,7 @@ async function UpdateCustomer(req, res) {
             MinRange: req.body.MinRange,
             MaxRange: req.body.MaxRange,
             Job: req.body.Job,
+            EmployeeID:req.body.EmployeeID,
             Address: req.body.Address,
             Street: req.body.Street,
             City: req.body.City,
@@ -129,11 +133,37 @@ async function CustomerLeadsPerMonth(req, res) {
         res.status(400).send({ message: "Customer Data is Empty" })
     }
 }
+
+async function GetCustomerOfEmployee(req,res) {
+    const id=req.user.id;
+    const Customers = await CustomerModel.find({EmployeeID:id}).populate('EmployeeID').exec();
+    if (Customers.length > 0) {
+        res.status(200).send(Customers);
+    } else {
+        res.status(400).send({ message: "Customer Data is Empty" })
+    }
+}
+
+async function GetCustomerOfEmployeeInThisMonth(req,res) {
+    const startOfMonth = moment().startOf('month').toDate();
+    const endOfMonth = moment().endOf('month').toDate();
+    const id=req.user.id;
+    const customers = await CustomerModel.find({EmployeeID:id,
+        CreatedAt: { $gte: startOfMonth, $lte: endOfMonth }
+    });
+    if (customers.length > 0) {
+        res.status(200).send(customers);
+    } else {
+        res.status(400).send({ message: "Customer Data is Empty" })
+    }
+}
 module.exports = {
     AddCustomer,
     ViewAllCustomer,
     ViewCustomer,
     UpdateCustomer,
     DeleteCustomer,
-    CustomerLeadsPerMonth
+    CustomerLeadsPerMonth,
+    GetCustomerOfEmployee,
+    GetCustomerOfEmployeeInThisMonth
 }

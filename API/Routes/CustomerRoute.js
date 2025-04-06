@@ -14,5 +14,7 @@ Customer.get("/viewcustomer/:id",AuthMiddleware("admin","sales-ref","manager"),C
 Customer.post("/updatecustomer/:id",AuthMiddleware("admin","sales-ref","manager"),CustomerController.UpdateCustomer);
 Customer.delete("/deletecustomer/:id",AuthMiddleware("admin","manager"),CustomerController.DeleteCustomer);
 Customer.get("/customerpermonth",AuthMiddleware("admin","sales-ref","manager"),CustomerController.CustomerLeadsPerMonth);
+Customer.get("/getcustomerofemployee",AuthMiddleware("admin","sales-ref","manager"),CustomerController.GetCustomerOfEmployee);
+Customer.get("/getcustomerofemployeeinthismonth",AuthMiddleware("admin","sales-ref","manager"),CustomerController.GetCustomerOfEmployeeInThisMonth);
 
 module.exports=Customer;

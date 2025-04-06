@@ -82,11 +82,11 @@ async function DeleteService(req,res) {
     }
 }
 
-async function servicespermonth(params) {
+async function servicespermonth(req,res) {
        const startOfMonth = moment().startOf('month').toDate();
         const endOfMonth = moment().endOf('month').toDate();
     
-        const customers = await CustomerModel.find({
+        const customers = await ServiceModel.find({
             CreatedAt: { $gte: startOfMonth, $lte: endOfMonth }
         });
         if (customers.length > 0) {

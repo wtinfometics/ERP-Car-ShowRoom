@@ -296,6 +296,16 @@ async function getallsalesref(req,res) {
     }
 }
 
+async function getEmployeeBytoken(req,res) {
+    const id = req.user.id;
+    const Employee = await EmployeeModel.findById(id);
+    if (Employee) {
+        res.send(Employee).status(200)
+    } else {
+        res.send({ message: "Employee Not Exists" }).status(400)
+    }
+} 
+
 module.exports = {
     CreateEmployee,
     ViewEmployees,
@@ -306,5 +316,6 @@ module.exports = {
     ForgetPassword,
     VerifyOtp,
     ResetPassword,
-    getallsalesref
+    getallsalesref,
+    getEmployeeBytoken
 }

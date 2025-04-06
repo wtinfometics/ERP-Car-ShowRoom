@@ -4,20 +4,23 @@ import { Link } from 'react-router-dom'
 import AuthHeader from '../Accounts/AuthHeader';
 const API_URL = import.meta.env.VITE_API_BASEURL;
 const role = localStorage.getItem("role");
+
 const Customer = () => {
     const [Customers, setCustomers] = useState([]);
 
     const [currentpage, setcurrentpage] = useState(1);
-    const recordsperpage = 1;
+    const recordsperpage = 10;
     const lastindex = currentpage * recordsperpage;
     const fristindex = lastindex - recordsperpage;
     const PaginatedCustomers = Customers.slice(fristindex, lastindex);
     const npages = Math.ceil(Customers.length / recordsperpage);
     const numberofpages = [...Array(npages + 1).keys()].slice(1);
 
+    const route=role=="sales-ref"?"getcustomerofemployee":"viewcustomers";
     const DisplayCustomer = (e) => {
-        axios.get(`${API_URL}viewcustomers`, { headers: AuthHeader() }).then((response) => {
+        axios.get(`${API_URL}${route}`, { headers: AuthHeader() }).then((response) => {
             setCustomers(response.data.reverse());
+            console.log(response.data)
         }).catch((error) => {
             console.log(error)
         });
@@ -63,7 +66,7 @@ const Customer = () => {
                                 <th>Customer Name</th>
                                 <th>Mobile Number</th>
                                 <th>Preferences</th>
-                                <th>Source</th>
+                                <th>LeadsFrom</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -79,7 +82,7 @@ const Customer = () => {
                                             {customer.MinRange + "-" + customer.MaxRange}
                                         </td>
                                         <td>
-                                            {customer.source}
+                                            {customer.EmployeeID.Firstname+" "+customer.EmployeeID.lastname}
                                         </td>
                                         <td>
                                             <div className="dropdown">
@@ -87,6 +90,8 @@ const Customer = () => {
                                                     <i className="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div className="dropdown-menu">
+                                                <Link to={"/viewcustomer/" + customer._id} aria-label="dropdown action option" className="dropdown-item"
+                                                    ><i className="bx bx-edit-alt me-1"></i> View </Link>
                                                 <Link to={"/editcustomer/" + customer._id} aria-label="dropdown action option" className="dropdown-item"
                                                     ><i className="bx bx-edit-alt me-1"></i> Edit </Link>
                                                     {role === "sales-ref" ? null : (

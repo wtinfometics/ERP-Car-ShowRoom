@@ -31,6 +31,7 @@ async function CreateAdmin(req, res) {
     if (!matched) {
         res.status(422).send(validate.errors);
     } else {
+        console.log(req.body.password)
         const EncPassword = await EncryptPassword(req.body.Password);
         const AdminData = {
             Firstname: req.body.Firstname,
@@ -284,6 +285,16 @@ async function Sendmail(EmailId, otp) {
 
 }
 
+async function getadminBytoken(req,res) {
+    const id = req.user.id;
+    const Admin = await AdminModel.findById(id);
+    if (Admin) {
+        res.send(Admin).status(200)
+    } else {
+        res.send({ message: "Admin Not Exists" }).status(400)
+    }
+} 
+
 module.exports = {
     CreateAdmin,
     ViewAdmins,
@@ -293,5 +304,6 @@ module.exports = {
     Login,
     ForgetPassword,
     VerifyOtp,
-    ResetPassword
+    ResetPassword,
+    getadminBytoken
 }

@@ -8,7 +8,7 @@ const Services = () => {
     const [Services, setServices] = useState([]);
 
     const [currentpage, setcurrentpage] = useState(1);
-    const recordsperpage = 1;
+    const recordsperpage = 10;
     const lastindex = currentpage * recordsperpage;
     const fristindex = lastindex - recordsperpage;
     const PaginatedServices = Services.slice(fristindex, lastindex);
@@ -86,7 +86,7 @@ const Services = () => {
 
                                                     <Link to={"/editservice/" + service._id} aria-label="dropdown action option" className="dropdown-item"
                                                     ><i className="bx bx-edit-alt me-1"></i> Edit </Link>
-                                                    {role === "sales-ref" ? null : (
+                                                    {role == "sales-ref" ? null : (
                                                         <>
                                                             <a aria-label="dropdown action option" className="dropdown-item" onClick={(e) => deketeService(e, service._id)}>
                                                                 <i className="bx bx-trash me-1"></i> Delete

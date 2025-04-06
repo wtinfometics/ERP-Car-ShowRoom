@@ -13,6 +13,7 @@ Admin.get("/ViewAdmins",AuthMiddleware("admin","sales-ref","manager"),AdminContr
 Admin.get("/ViewAdmin/:id",AuthMiddleware("admin"),AdminController.ViewAdmin);
 Admin.post("/UpdateAdmin/:id",AuthMiddleware("admin"),AdminController.UpdateAdmin);
 Admin.delete("/DeleteAdmin/:id",AuthMiddleware("admin"),AdminController.DeleteAdmin);
+Admin.get("/getadminbytoken",AuthMiddleware("admin"),AdminController.getadminBytoken);
 
 Admin.post("/admin/Login",AdminController.Login);
 Admin.post("/admin/ForgetPassword",AdminController.ForgetPassword);
