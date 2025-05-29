@@ -18,8 +18,21 @@ const ViewOrderDetails = () => {
     }
 
     useEffect(() => {
-        displayOrder()
+        const loadData = async () => {
+            await displayOrder() // Call your data-fetching function
+
+            // Wait at least 2 seconds before setting loading to false
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
+        };
+
+        loadData();
     }, [])
+
+    if (loading) {
+        return <Spinner />;
+    }
 
     const formatIndianCurrency = (amount) => {
         return new Intl.NumberFormat('en-IN').format(amount);

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const API_URL = import.meta.env.VITE_API_BASEURL;
 const Login = () => {
     const nabigate = useNavigate();
+      const [adminloginerror, setadminloginerror] = useState("");
     const [inputerror, setinputerror] = useState([]);
     const [formData, setFormData] = useState({
         password: '',
@@ -42,7 +43,7 @@ const Login = () => {
             Password: formData.password
         })
             .then((response) => {
-                console.log('Login successful:', response.data);
+                console.log('Login successful:', response);
 
                 if (response.data.token) {
                     localStorage.setItem('user', JSON.stringify(response.data.token));
@@ -51,8 +52,10 @@ const Login = () => {
                 }
             })
             .catch((error) => {
+
                 // Display error message
                 if (error.response && error.response.data) {
+                     setadminloginerror(error.response.data.message)
                     setinputerror(error.response.data);
                 } else {
                     console.error('An error occurred:', error.message);
@@ -102,6 +105,7 @@ const Login = () => {
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
                         <form id="formAuthentication" className="mb-3" onSubmit={handleSubmit}>
+                              <p className='text-danger'>{inputerror?.message ? inputerror.message : ""}</p>
                             <div className="mb-3">
                                 <label htmlFor="email" className="form-label">Email </label>
                                 <input
@@ -164,6 +168,7 @@ const Login = () => {
                     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
                 
                     <form id="formAuthentication" className="mb-3" onSubmit={handleEmpSubmit}>
+                           <p className='text-danger'>{empinputerror?.message ? empinputerror.message : ""}</p>
                             <div className="mb-3">
                                 <label htmlFor="email" className="form-label">Email </label>
                                 <input

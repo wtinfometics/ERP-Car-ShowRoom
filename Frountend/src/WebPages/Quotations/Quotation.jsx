@@ -2,10 +2,12 @@ import axios, { AxiosHeaders } from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AuthHeader from '../Accounts/AuthHeader';
+import Spinner from '../../components/Spinner/Spinner';
 const API_URL = import.meta.env.VITE_API_BASEURL;
 const role = localStorage.getItem("role");
 const Quotation = () => {
     const [Quotations, setQuotations] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const [currentpage, setcurrentpage] = useState(1);
     const recordsperpage = 10;
@@ -31,8 +33,21 @@ const Quotation = () => {
         });
     }
     useEffect(() => {
-        DisplayQuotation();
+        const loadData = async () => {
+            await DisplayQuotation(); // Call your data-fetching function
+
+            // Wait at least 2 seconds before setting loading to false
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
+        };
+
+        loadData();
     }, [])
+
+    if (loading) {
+        return <Spinner />;
+    }
 
     function previouspaginate() {
         if (currentpage !== 1) {
@@ -53,13 +68,13 @@ const Quotation = () => {
     const getStockBadgeClass = (status) => {
         switch (true) {
             case status == "rejected":
-                return "bg-label-danger";  
+                return "bg-label-danger";
             case status == "pending":
-                return "bg-label-warning";  
+                return "bg-label-warning";
             case status == "approved":
-                return "bg-label-success"; 
+                return "bg-label-success";
             default:
-                return "bg-label-primary";  
+                return "bg-label-primary";
         }
     };
 
@@ -98,7 +113,7 @@ const Quotation = () => {
                                             {quotation?.VehicleID?.variant}
                                         </td>
                                         <td>
-                                            {formatIndianCurrency(quotation.Price)} 
+                                            {formatIndianCurrency(quotation.Price)}
                                         </td>
                                         <td>
                                             <span className={`badge ${getStockBadgeClass(quotation.Status)} me-1`}>
@@ -115,7 +130,7 @@ const Quotation = () => {
                                                     ><i className="bx bx-edit-alt me-1"></i> View </Link>
                                                     <Link to={"/editquotation/" + quotation._id} aria-label="dropdown action option" className="dropdown-item"
                                                     ><i className="bx bx-edit-alt me-1"></i> Edit </Link>
-                                                    {role === "sales-ref" ? null :(
+                                                    {role === "sales-ref" ? null : (
                                                         <>
                                                             <a aria-label="dropdown action option" className="dropdown-item" onClick={(e) => deketeQuotation(e, quotation._id)}>
                                                                 <i className="bx bx-trash me-1"></i> Delete

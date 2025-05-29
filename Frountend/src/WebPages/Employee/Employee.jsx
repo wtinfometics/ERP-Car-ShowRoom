@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 import AuthHeader from '../Accounts/AuthHeader';
 const API_URL = import.meta.env.VITE_API_BASEURL;
 const role = localStorage.getItem("role");
-
+import Spinner from '../../components/Spinner/Spinner';
 const Employee = () => {
     const [Employees, setEmployees] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const [currentpage, setcurrentpage] = useState(1);
     const recordsperpage = 10;
@@ -31,8 +32,22 @@ const Employee = () => {
         });
     }
     useEffect(() => {
-        DisplayEmployees();
+        const loadData = async () => {
+            await DisplayEmployees(); // Call your data-fetching function
+
+            // Wait at least 2 seconds before setting loading to false
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
+        };
+
+        loadData();
+
     }, [])
+
+    if (loading) {
+        return <Spinner />;
+    }
 
     function previouspaginate() {
         if (currentpage !== 1) {

@@ -127,7 +127,7 @@ async function Login(req, res) {
             const token = await GenerateToken(user._id,user.role);
             res.status(200).send({ message: "Log in Successfully", token: token,role:user.role });
         } else {
-            res.status(400).send({ message: "Log in failed" });
+            res.status(400).send({ message: "Invalid E-mail ID Or Password"  });
         }
     }
 }

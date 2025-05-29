@@ -2,6 +2,7 @@ import axios, { AxiosHeaders } from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AuthHeader from '../Accounts/AuthHeader';
+import Spinner from '../../components/Spinner/Spinner';
 const API_URL = import.meta.env.VITE_API_BASEURL;
 const role = localStorage.getItem("role");
 const AdminDashboard = () => {
@@ -9,6 +10,7 @@ const AdminDashboard = () => {
     const [Leads, setLeads] = useState([]);
     const [Service, setService] = useState([]);
     const [Sales, setSales] = useState([]);
+      const [loading, setLoading] = useState(true);
 
     const PaginatedOrders = Sales.slice(0, 5);
     const DisplayVehicles = (e) => {
@@ -45,13 +47,30 @@ const AdminDashboard = () => {
 
 
     useEffect(() => {
-        DisplayCustomerPerMonth();
-        DisplayVehicles();
-        DisplayService();
-        DisplaySales();
-        dashboardAnalitics();
+                const loadData = async () => {
+              await Promise.all([
+       DisplayCustomerPerMonth(),
+        DisplayVehicles(),
+        DisplayService(),
+        DisplaySales(),
+        dashboardAnalitics(),
+      ]);
+
+
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
+        };
+
+        loadData();
+ 
+ 
     }, [])
 
+    if (loading) {
+        return <Spinner />
+    }
+    
     const formatIndianCurrency = (amount) => {
         return new Intl.NumberFormat('en-IN').format(amount);
     };

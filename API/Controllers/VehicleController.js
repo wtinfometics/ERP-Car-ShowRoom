@@ -1,7 +1,9 @@
 const VehicleModel = require("../Models/VehicleModel");
 const { Validator } = require("node-input-validator");
 
+
 async function AddVehicle(req, res) {
+    console.log(req.body);
     const validate = new Validator(req.body, {
         model_name: "required|string",
         variant: "required|string",
@@ -10,6 +12,7 @@ async function AddVehicle(req, res) {
         vin_number: "required|string",
         Price: "required|numeric"
     });
+
     const matched = await validate.check();
     if (!matched) {
         res.status(422).json(validate.errors);
@@ -20,7 +23,7 @@ async function AddVehicle(req, res) {
             color: req.body.color,
             stock_quantity: req.body.stock_quantity,
             vin_number: req.body.vin_number,
-            Price: req.body.Price
+            Price: req.body.Price,
         }
         const AddVehicle = new VehicleModel(formdata);
         const SaveVehicle = await AddVehicle.save();

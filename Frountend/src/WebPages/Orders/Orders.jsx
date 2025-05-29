@@ -2,10 +2,12 @@ import axios, { AxiosHeaders } from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AuthHeader from '../Accounts/AuthHeader';
+import Spinner from '../../components/Spinner/Spinner';
 const API_URL = import.meta.env.VITE_API_BASEURL;
 const role = localStorage.getItem("role");
 const Orders = () => {
     const [Orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const [currentpage, setcurrentpage] = useState(1);
     const recordsperpage = 10;
@@ -32,8 +34,21 @@ const Orders = () => {
         });
     }
     useEffect(() => {
-        DisplayOrders();
+              const loadData = async () => {
+            await DisplayOrders(); // Call your data-fetching function
+
+            // Wait at least 2 seconds before setting loading to false
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
+        };
+
+        loadData();
     }, [])
+
+        if (loading) {
+        return <Spinner />;
+    }
 
     function previouspaginate() {
         if (currentpage !== 1) {

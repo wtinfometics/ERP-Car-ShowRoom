@@ -2,10 +2,12 @@ import axios, { AxiosHeaders } from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AuthHeader from '../Accounts/AuthHeader';
+import Spinner from '../../components/Spinner/Spinner';
 const API_URL = import.meta.env.VITE_API_BASEURL;
 const role = localStorage.getItem("role");
 const Services = () => {
     const [Services, setServices] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const [currentpage, setcurrentpage] = useState(1);
     const recordsperpage = 10;
@@ -31,8 +33,23 @@ const Services = () => {
         });
     }
     useEffect(() => {
-        DisplayServices();
+        const loadData = async () => {
+            await DisplayServices(); // Call your data-fetching function
+
+            // Wait at least 2 seconds before setting loading to false
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
+        };
+
+        loadData();
+
+
     }, [])
+
+    if (loading) {
+        return <Spinner />;
+    }
 
     function previouspaginate() {
         if (currentpage !== 1) {
@@ -70,13 +87,13 @@ const Services = () => {
                                 PaginatedServices.map((service) => (
                                     <tr key={service._id}>
                                         <td>
-                                            <span className="fw-medium">{service.CustomerName }</span>
+                                            <span className="fw-medium">{service.CustomerName}</span>
                                         </td>
                                         <td>{service.RegNumber}</td>
                                         <td>
                                             {service.AppointMentDate}
                                         </td>
-                                 
+
                                         <td>
                                             <div className="dropdown">
                                                 <button aria-label='Click me' type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">

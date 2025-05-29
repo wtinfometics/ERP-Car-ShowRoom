@@ -40,11 +40,27 @@ const SalesREFDashboard = () => {
 
 
     useEffect(() => {
-        DisplayCustomerPerMonth();
-        DisplayVehicles();
-        DisplaySales();
-        dashboardAnalitics();
+        const loadData = async () => {
+              await Promise.all([
+        DisplayCustomerPerMonth(),
+        DisplayVehicles(),
+        DisplaySales(),
+        dashboardAnalitics()
+      ]);
+
+
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
+        };
+
+        loadData();
     }, [])
+
+    if (loading) {
+        return <Spinner />;
+    }
+
 
     const formatIndianCurrency = (amount) => {
         return new Intl.NumberFormat('en-IN').format(amount);
@@ -59,7 +75,7 @@ const SalesREFDashboard = () => {
                                 <div className="card-body">
                                     <div className="card-title d-flex align-items-start justify-content-between">
                                         <div className="avatar flex-shrink-0">
-                                      <i class='bx bxs-user text-info' style={{fontSize:"3rem"}}></i>
+                                            <i class='bx bxs-user text-info' style={{ fontSize: "3rem" }}></i>
                                         </div>
                                         <div>
                                             <h3 className="card-title mb-2 text-center"> {Leads.length} </h3>
@@ -76,7 +92,7 @@ const SalesREFDashboard = () => {
                                 <div className="card-body">
                                     <div className="card-title d-flex align-items-start justify-content-between">
                                         <div className="avatar flex-shrink-0">
-                                        <i class='bx bxs-car text-warning' style={{fontSize:"3rem"}}></i>
+                                            <i class='bx bxs-car text-warning' style={{ fontSize: "3rem" }}></i>
                                         </div>
                                         <div>
                                             <h3 className="card-title mb-2 text-center"> {Vehicles.length} </h3>
@@ -98,7 +114,7 @@ const SalesREFDashboard = () => {
                                 <div className="card-body">
                                     <div className="card-title d-flex align-items-start justify-content-between">
                                         <div className="avatar flex-shrink-0">
-                                        <i class='bx bxs-category text-success' style={{fontSize:"3rem"}} ></i>
+                                            <i class='bx bxs-category text-success' style={{ fontSize: "3rem" }} ></i>
                                         </div>
                                         <div>
                                             <h3 className="card-title mb-2 text-center"> {Sales.length} </h3>

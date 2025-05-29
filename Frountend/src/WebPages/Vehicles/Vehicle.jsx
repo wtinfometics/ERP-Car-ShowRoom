@@ -2,10 +2,12 @@ import axios, { AxiosHeaders } from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AuthHeader from '../Accounts/AuthHeader';
+import Spinner from '../../components/Spinner/Spinner';
 const API_URL = import.meta.env.VITE_API_BASEURL;
 const role = localStorage.getItem("role");
 const Vehicle = () => {
     const [Vehicles, setVehicle] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const [currentpage, setcurrentpage] = useState(1);
     const recordsperpage = 30;
@@ -22,16 +24,30 @@ const Vehicle = () => {
             console.log(error)
         });
     }
-    const deketeVehicle=(e,id)=>{
-        axios.delete(`${API_URL}deletevehicle/`+id, { headers: AuthHeader() }).then((response) => {
+    const deketeVehicle = (e, id) => {
+        axios.delete(`${API_URL}deletevehicle/` + id, { headers: AuthHeader() }).then((response) => {
             Displaveyhicles();
         }).catch((error) => {
             console.log(error)
         });
     }
     useEffect(() => {
-        Displaveyhicles();
+        const loadData = async () => {
+            await Displaveyhicles();// Call your data-fetching function
+
+            // Wait at least 2 seconds before setting loading to false
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
+        };
+
+        loadData();
+
     }, [])
+
+    if (loading) {
+        return <Spinner />;
+    }
 
     const getStockBadgeClass = (quantity) => {
         switch (true) {
@@ -108,12 +124,12 @@ const Vehicle = () => {
                                                     <i className="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div className="dropdown-menu">
-                                                <Link to={"/viewvehicles/"+vehicle._id} aria-label="dropdown action option" className="dropdown-item" 
+                                                    <Link to={"/viewvehicles/" + vehicle._id} aria-label="dropdown action option" className="dropdown-item"
                                                     ><i className="bx bx-edit-alt me-1"></i> View </Link>
-                                                    <Link to={"/editvehicle/"+vehicle._id} aria-label="dropdown action option" className="dropdown-item" 
+                                                    <Link to={"/editvehicle/" + vehicle._id} aria-label="dropdown action option" className="dropdown-item"
                                                     ><i className="bx bx-edit-alt me-1"></i> Edit </Link>
                                                     {role == "sales-ref" ? null : (
-                                                        <a aria-label="dropdown action option" className="dropdown-item" onClick={(e)=>deketeVehicle(e,vehicle._id)}>
+                                                        <a aria-label="dropdown action option" className="dropdown-item" onClick={(e) => deketeVehicle(e, vehicle._id)}>
                                                             <i className="bx bx-trash me-1"></i> Delete
                                                         </a>
                                                     )}
@@ -129,19 +145,19 @@ const Vehicle = () => {
                     <div className='d-flex flex-wrap justify-content-center mt-5'>
                         <nav aria-label="Page navigation">
                             <ul className="pagination">
-                                <li className={currentpage === 1 ?"page-item las disabled":"page-item last"}   onClick={previouspaginate} >
+                                <li className={currentpage === 1 ? "page-item las disabled" : "page-item last"} onClick={previouspaginate} >
                                     <a aria-label="pagination link" className="page-link" href="#"
                                     ><i className="tf-icon bx bx-chevrons-left"></i
                                     ></a>
                                 </li>
                                 {
-                                    numberofpages.map((num,i)=>(
-                                        <li className={currentpage === num ?"page-item active":"page-item"} onClick={() => changeCurrentPagepaginate(num)} key={i}>
-                                        <a aria-label="pagination link" className="page-link" >1</a>
-                                    </li>
+                                    numberofpages.map((num, i) => (
+                                        <li className={currentpage === num ? "page-item active" : "page-item"} onClick={() => changeCurrentPagepaginate(num)} key={i}>
+                                            <a aria-label="pagination link" className="page-link" >1</a>
+                                        </li>
                                     ))
                                 }
-                                <li className={currentpage === npages ?"page-item las disabled":"page-item last"} onClick={nextpagiginate} >
+                                <li className={currentpage === npages ? "page-item las disabled" : "page-item last"} onClick={nextpagiginate} >
                                     <a aria-label="pagination link" className="page-link" href="#"
                                     ><i className="tf-icon bx bx-chevrons-right"></i
                                     ></a>

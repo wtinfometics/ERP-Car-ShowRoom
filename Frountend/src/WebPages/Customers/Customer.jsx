@@ -2,12 +2,13 @@ import axios, { AxiosHeaders } from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AuthHeader from '../Accounts/AuthHeader';
+import Spinner from '../../components/Spinner/Spinner';
 const API_URL = import.meta.env.VITE_API_BASEURL;
 const role = localStorage.getItem("role");
 
 const Customer = () => {
     const [Customers, setCustomers] = useState([]);
-
+    const [loading, setLoading] = useState(true);
     const [currentpage, setcurrentpage] = useState(1);
     const recordsperpage = 10;
     const lastindex = currentpage * recordsperpage;
@@ -16,7 +17,7 @@ const Customer = () => {
     const npages = Math.ceil(Customers.length / recordsperpage);
     const numberofpages = [...Array(npages + 1).keys()].slice(1);
 
-    const route=role=="sales-ref"?"getcustomerofemployee":"viewcustomers";
+    const route = role == "sales-ref" ? "getcustomerofemployee" : "viewcustomers";
     const DisplayCustomer = (e) => {
         axios.get(`${API_URL}${route}`, { headers: AuthHeader() }).then((response) => {
             setCustomers(response.data.reverse());
@@ -33,8 +34,22 @@ const Customer = () => {
         });
     }
     useEffect(() => {
-        DisplayCustomer();
+        const loadData = async () => {
+            await DisplayCustomer(); // Call your data-fetching function
+
+            // Wait at least 2 seconds before setting loading to false
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
+        };
+
+        loadData();
+
     }, [])
+
+    if (loading) {
+        return <Spinner />;
+    }
 
     function previouspaginate() {
         if (currentpage !== 1) {
@@ -61,7 +76,7 @@ const Customer = () => {
             <div className="card">
                 <h5 className="card-header">Customer Leads
 
-                     <Link to='/addcustomer'> <button className='btn btn-primary btn-sm mx-3'>Add New</button> </Link>
+                    <Link to='/addcustomer'> <button className='btn btn-primary btn-sm mx-3'>Add New</button> </Link>
 
                 </h5>
                 <div className="table-responsive text-nowrap">
@@ -87,7 +102,7 @@ const Customer = () => {
                                             {formatIndianCurrency(customer.MinRange) + "-" + formatIndianCurrency(customer.MaxRange)}
                                         </td>
                                         <td>
-                                            {customer?.EmployeeID?.Firstname+" "+customer?.EmployeeID?.lastname}
+                                            {customer?.EmployeeID?.Firstname + " " + customer?.EmployeeID?.lastname}
                                         </td>
                                         <td>
                                             <div className="dropdown">
@@ -95,9 +110,9 @@ const Customer = () => {
                                                     <i className="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div className="dropdown-menu">
-                                                <Link to={"/viewcustomer/" + customer._id} aria-label="dropdown action option" className="dropdown-item"
+                                                    <Link to={"/viewcustomer/" + customer._id} aria-label="dropdown action option" className="dropdown-item"
                                                     ><i className="bx bx-edit-alt me-1"></i> View </Link>
-                                                <Link to={"/editcustomer/" + customer._id} aria-label="dropdown action option" className="dropdown-item"
+                                                    <Link to={"/editcustomer/" + customer._id} aria-label="dropdown action option" className="dropdown-item"
                                                     ><i className="bx bx-edit-alt me-1"></i> Edit </Link>
                                                     {role === "sales-ref" ? null : (
                                                         <a aria-label="dropdown action option" className="dropdown-item" onClick={(e) => deketeCustomer(e, customer._id)}>
