@@ -126,6 +126,7 @@ async function Login(req, res) {
 }
 
 async function ForgetPassword(req, res) {
+
     const validate = new Validator(req.body, {
         EmailId: "required|email"
     });

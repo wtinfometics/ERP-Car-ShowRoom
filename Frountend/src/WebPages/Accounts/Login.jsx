@@ -5,6 +5,7 @@ import "../../pages/authentication/page-auth.css"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
 const API_URL = import.meta.env.VITE_API_BASEURL;
 const Login = () => {
     const nabigate = useNavigate();
@@ -89,9 +90,10 @@ const Login = () => {
     }
 
     return (
-        <AuthWrapper>
+        <>
+           <div className="tinted-background" >
 
-
+                <AuthWrapper>
             <div className='d-flex flex-wrap justify-content-center'>
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -215,8 +217,33 @@ const Login = () => {
 
 
 
-
         </AuthWrapper>
+
+      </div>
+
+      <style jsx="true">{`
+        .tinted-background {
+          position: relative;
+          height: 100vh;
+           background-image: url('https://images.unsplash.com/photo-1692406069831-0bb7ea297645?q=80&w=1036&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+          background-size: cover;
+          background-position: center;
+        }
+
+        .tinted-background::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          background: rgba(0, 0, 0, 0.5); /* Light black tint */
+          z-index: 1;
+        }
+      `}</style>
+
+        </>
+
     )
 }
 

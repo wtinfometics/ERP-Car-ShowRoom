@@ -42,7 +42,9 @@ const ResetPassword = () => {
     });
   };
   return (
-    <AuthWrapper>
+    <>
+          <div className="tinted-background" >
+       <AuthWrapper>
 
       <form id="formAuthentication" className="mb-3" onSubmit={handleSubmit}>
         <div className="mb-3 form-password-toggle">
@@ -91,7 +93,31 @@ const ResetPassword = () => {
         </Link>
       </p>
 
-    </AuthWrapper>
+    </AuthWrapper> 
+</div>
+
+            <style jsx="true">{`
+        .tinted-background {
+          position: relative;
+          height: 100vh;
+           background-image: url('https://images.unsplash.com/photo-1692406069831-0bb7ea297645?q=80&w=1036&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+          background-size: cover;
+          background-position: center;
+        }
+
+        .tinted-background::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          background: rgba(0, 0, 0, 0.5); /* Light black tint */
+          z-index: 1;
+        }
+      `}</style> 
+    </>
+
   )
 }
 
