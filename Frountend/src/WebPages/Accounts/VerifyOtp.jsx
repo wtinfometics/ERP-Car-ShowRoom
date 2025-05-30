@@ -35,7 +35,7 @@ const VerifyOtp = () => {
             otp: formData.otp
         }).then((response) => {
             console.log(response.data)
-            navigate("/auth/resetpassword", { state: { key: response.data.EmailId } })
+            navigate("/auth/resetpassword", { state: { key: response.data.emailid } })
         }).catch((error) => {
             if (error.response && error.response.data) {
                 setinputerror(error.response.data);

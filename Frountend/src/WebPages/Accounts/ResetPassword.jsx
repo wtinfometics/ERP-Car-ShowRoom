@@ -25,7 +25,7 @@ const ResetPassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+console.log(key);
     axios.post(`${API_URL}admin/ResetPassword`, {
       EmailId: key,
       password: formData.password,
